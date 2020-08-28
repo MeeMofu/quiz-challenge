@@ -56,3 +56,24 @@ header a{
     position: relative;
     top: -3px;
   }
+
+/* Option pannel format */
+.option-pannel{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 150px);
+    gap: 10px;
+    margin-top: 25px;
+}
+.option-wrapper{
+    display: flex;
+    background-color: indigo;
+    border-radius: 12px;
+}
+.option {
+    display:flex;
+    padding: 10px;
+    margin: 0 auto;
+    align-items: center;
+    color: ivory;
+}
