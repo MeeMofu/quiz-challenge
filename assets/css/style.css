@@ -1,0 +1,58 @@
+/* Universal styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.hide{
+    display: none;
+}
+
+/* Header styling */
+header{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: 15px 0;
+}
+header a{
+    text-decoration: none;
+    color: blueviolet;
+}
+
+/* Main styling */
+.main{
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 60px;
+    width: 590px;
+}
+.prompt{
+    font-weight: bolder;
+}
+.main p {
+    /* display: none; */
+    padding: 20px 0;
+}
+
+.btn {
+    background-color: indigo;
+    color: ivory;
+    outline: none;
+    border: none;
+    /* display: inline-block; */
+    padding: 10px 15px;
+    font-size: 15px;
+    border-radius: 12px;
+    position: relative;
+    top: -3px;
+  }
