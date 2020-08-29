@@ -49,13 +49,13 @@ header a{
     color: ivory;
     outline: none;
     border: none;
-    /* display: inline-block; */
     padding: 10px 15px;
     font-size: 15px;
     border-radius: 12px;
-    position: relative;
-    top: -3px;
   }
+.btn:hover {
+    background-color: darkorchid;
+}
 
 /* Option pannel format */
 .option-pannel{
@@ -70,10 +70,24 @@ header a{
     background-color: indigo;
     border-radius: 12px;
 }
+.option-wrapper:hover {
+    background-color: darkorchid;
+}
 .option {
     display:flex;
     padding: 10px;
     margin: 0 auto;
     align-items: center;
     color: ivory;
+}
+/* Result format */
+.result {
+    color: grey;
+    padding-top: 25px;
+}
+
+#correct , #incorrect {
+    border-top: grey 2px solid;
+    padding-top: 15px;
+    font-style: italic;
 }
