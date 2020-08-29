@@ -11,14 +11,16 @@ var question = [
     { q: '<var> data does not include', op0: 'boolean', op1: 'alert', op2: 'number', op3: 'string', ans: '1'},
     { q: 'Inside which HTML element do we put JavaScript?', op0: '<js>', op1: '<scipt>', op2: '<scripting>', op3: '<javascipt>', ans: '1'}
 ];
+var quesNum=0; //Keeping track of question
 
-var isQuesUpd = false; //For checking when the question needs to be update
+var timeLeft=30;
 
-var timeLeft=5;
-var score=0;
+var displayResult = function (result){
+    console.log(result);
+}
 
 var updateQuestion = function(index){
-    // index here is uses for which question the quiz is on
+    // index here is uses for which question the quiz is on, uses index instead of quesNum for randomizing questions
     questionPrompt.textContent = question[index].q;
     document.querySelector("[data-choice-id='0']").textContent = question[index].op0;
     document.querySelector("[data-choice-id='1']").textContent = question[index].op1;
@@ -30,18 +32,35 @@ var updateQuestion = function(index){
 var endGame = function () {
     userInput.classList.add("hide");
     questionPrompt.textContent = "All done!";
+    console.log (timeLeft);
     // shows score + input form
     // save input
 }
+var timerInterval
 
-var timeInterval
+var nextQuestion = function(input){
+    var result = (input === question[quesNum].ans);
+    if (!result){
+        timeLeft-=10;
+        timer.textContent = Math.max(timeLeft,0)
+    }
+    displayResult(result);
+    if (quesNum<1){
+        quesNum++;
+        updateQuestion(quesNum);
+    } else {
+        clearInterval(timerInterval);
+        endGame();
+    }
+}
+
 var clockStart = function(){
-    timeInterval = setInterval(function(){
+    timerInterval = setInterval(function(){
         if (timeLeft>0){
             timeLeft--;
             timer.textContent = timeLeft;
         } else {
-            clearInterval(timeInterval);
+            clearInterval(timerInterval);
             endGame();
         }
     },1000);
@@ -51,9 +70,8 @@ var readUserInput = function(event){
     var isPannelClicked = event.target.closest(".option-wrapper");
     if (isPannelClicked){
         var input = isPannelClicked.querySelector(".option").getAttribute("data-choice-id");
-        clearInterval(timeInterval);
-        console.log(input);
         // Check answers
+        nextQuestion(input);
     }
 }
 
