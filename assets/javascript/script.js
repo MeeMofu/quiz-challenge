@@ -9,14 +9,39 @@ var timer = document.querySelector(".timer");
 // Question listing
 var question = [
     { q: '<var> data does not include', op0: 'boolean', op1: 'alert', op2: 'number', op3: 'string', ans: '1'},
+    { q: '<var> data does not include', op0: 'boolean', op1: 'alert', op2: 'number', op3: 'string', ans: '1'},
     { q: 'Inside which HTML element do we put JavaScript?', op0: '<js>', op1: '<scipt>', op2: '<scripting>', op3: '<javascipt>', ans: '1'}
 ];
 var quesNum=0; //Keeping track of question
-
 var timeLeft=30;
+
+var fadeTimer;
+var fadeOutCorrect = function(){
+    correctAns.style.opacity = '0';
+}
+var fadeOutIncorrect = function(){
+    wrongAns.style.opacity = '0';
+}
+var clearResult = function(){
+    clearTimeout(fadeTimer); 
+    correctAns.classList.add("hide");
+    correctAns.style.opacity = '1';
+    wrongAns.classList.add("hide");
+    wrongAns.style.opacity = '1';
+}
 
 var displayResult = function (result){
     console.log(result);
+    clearResult();
+    if (result){
+        correctAns.classList.remove("hide");
+        fadeTimer = setTimeout(fadeOutCorrect,1000);
+    } else {
+        wrongAns.classList.remove("hide");
+        fadeTimer = setTimeout(fadeOutIncorrect,1000);
+
+    }
+    
 }
 
 var updateQuestion = function(index){
@@ -32,7 +57,7 @@ var updateQuestion = function(index){
 var endGame = function () {
     userInput.classList.add("hide");
     questionPrompt.textContent = "All done!";
-    console.log (timeLeft);
+    console.log (Math.max(timeLeft,0));
     // shows score + input form
     // save input
 }
@@ -45,7 +70,7 @@ var nextQuestion = function(input){
         timer.textContent = Math.max(timeLeft,0)
     }
     displayResult(result);
-    if (quesNum<1){
+    if (quesNum<2){
         quesNum++;
         updateQuestion(quesNum);
     } else {
@@ -82,7 +107,6 @@ var startQuiz = function(event){
     userInput.classList.remove("hide");
     // Set the prompt to left align
     questionPrompt.style.textAlign = "left";
-    quesNum=0; 
     // Start timer
     timer.textContent = timeLeft;
     clockStart();

@@ -90,4 +90,6 @@ header a{
     border-top: grey 2px solid;
     padding-top: 15px;
     font-style: italic;
+    /* opacity: 1; */
+    transition: 1s opacity;
 }
