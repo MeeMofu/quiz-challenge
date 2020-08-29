@@ -5,6 +5,7 @@ var userInput = document.querySelector("#quiz-input");
 var correctAns = document.querySelector("#correct");
 var wrongAns = document.querySelector("#incorrect");
 var timer = document.querySelector(".timer");
+var userscore = document.querySelector("#score-form");
 
 // Question listing
 var question = [
@@ -14,6 +15,8 @@ var question = [
 ];
 var quesNum=0; //Keeping track of question
 var timeLeft=30;
+
+// localStorage.setItem("scoreList","");
 
 var fadeTimer;
 var fadeOutCorrect = function(){
@@ -31,7 +34,6 @@ var clearResult = function(){
 }
 
 var displayResult = function (result){
-    console.log(result);
     clearResult();
     if (result){
         correctAns.classList.remove("hide");
@@ -53,13 +55,13 @@ var updateQuestion = function(index){
     document.querySelector("[data-choice-id='3']").textContent = question[index].op3;
 }
 
-
 var endGame = function () {
     userInput.classList.add("hide");
     questionPrompt.textContent = "All done!";
-    console.log (Math.max(timeLeft,0));
+    questionPrompt.style.textAlign = "center";
     // shows score + input form
-    // save input
+    userscore.classList.remove("hide");
+    userscore.querySelector("#score").textContent="Your score is "+Math.max(timeLeft,0);
 }
 var timerInterval
 
@@ -67,7 +69,7 @@ var nextQuestion = function(input){
     var result = (input === question[quesNum].ans);
     if (!result){
         timeLeft-=10;
-        timer.textContent = Math.max(timeLeft,0)
+        timer.textContent = Math.max(timeLeft,0);
     }
     displayResult(result);
     if (quesNum<2){
@@ -116,6 +118,46 @@ var startQuiz = function(event){
 
 userInput.addEventListener("click",readUserInput);
  
-
-
 startButton.addEventListener("click",startQuiz);
+
+var saveInfo=function(userinit,userscore){
+    var newInfo = {init: userinit, score: userscore};
+    // console.log(newInfo);
+    // Get previous scores
+    var memory = localStorage.getItem("scoreList");
+    console.log(memory);
+    if ((memory == null)||(memory==="")){
+        //checks if null
+        var scoreList = []; //array of object
+        scoreList.push(newInfo); 
+    } else {
+        var scoreList = JSON.parse(memory);
+        if (scoreList[scoreList.length-1].score>userscore){
+            // check if latest score is lowest
+            scoreList.push(newInfo); 
+        } else {
+            // if not lowest, find previous score that is lower than the current one
+            var i=0;
+            while (userscore<scoreList[i].score){
+                i++;
+            }
+            scoreList.splice(i,0,newInfo);
+        }
+    }
+    localStorage.setItem("scoreList",JSON.stringify(scoreList));
+    console.log(scoreList);
+}
+
+var saveScore = function(event){
+    event.preventDefault();
+    var userInit = document.querySelector("input[name='username']").value;
+    userscore.reset();
+    if (userInit === ""){
+        alert("Please enter your initials")
+    } else {
+        saveInfo(userInit,timeLeft);
+        // open("./highscore.html","_self");
+    }
+}
+
+userscore.addEventListener("submit",saveScore);
