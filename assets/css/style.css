@@ -36,6 +36,12 @@ header a{
     padding-top: 60px;
     width: 590px;
 }
+
+.main a{
+    text-decoration: none;
+    width: 100%;
+}
+
 .prompt{
     font-weight: bolder;
 }
@@ -111,4 +117,28 @@ form input {
     font-style: italic;
     /* opacity: 1; */
     transition: 1s opacity;
+}
+
+/* Highscore format */
+
+.display-score{
+    width: 60%;
+    margin: 20px auto;
+    text-align: left;
+    list-style: none;
+}
+
+.display-score li {
+    padding: 7px 10px;
+    margin-bottom: 5px;
+    border-radius: 7px;
+    background-color: rgb(225, 210, 243);
+}
+
+.display-score li:nth-child(2n-1){
+    background-color: mediumpurple;
+}
+
+#empty {
+    margin: 20px 0;
 }

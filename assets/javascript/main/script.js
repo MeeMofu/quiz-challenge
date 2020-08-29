@@ -16,8 +16,6 @@ var question = [
 var quesNum=0; //Keeping track of question
 var timeLeft=30;
 
-// localStorage.setItem("scoreList","");
-
 var fadeTimer;
 var fadeOutCorrect = function(){
     correctAns.style.opacity = '0';
@@ -122,7 +120,6 @@ startButton.addEventListener("click",startQuiz);
 
 var saveInfo=function(userinit,userscore){
     var newInfo = {init: userinit, score: userscore};
-    // console.log(newInfo);
     // Get previous scores
     var memory = localStorage.getItem("scoreList");
     console.log(memory);
@@ -145,7 +142,6 @@ var saveInfo=function(userinit,userscore){
         }
     }
     localStorage.setItem("scoreList",JSON.stringify(scoreList));
-    console.log(scoreList);
 }
 
 var saveScore = function(event){
@@ -156,7 +152,7 @@ var saveScore = function(event){
         alert("Please enter your initials")
     } else {
         saveInfo(userInit,timeLeft);
-        // open("./highscore.html","_self");
+        open("./highscore.html","_self");
     }
 }
 
