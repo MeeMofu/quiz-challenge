@@ -48,7 +48,7 @@ var displayResult = function (result){
 }
 
 var updateQuestion = function(index){
-    // index here is uses for which question the quiz is on, uses index instead of quesNum for randomizing questions
+    // index here is uses for which question the quiz is on
     questionPrompt.textContent = question[index].q;
     document.querySelector("[data-choice-id='0']").textContent = question[index].op0;
     document.querySelector("[data-choice-id='1']").textContent = question[index].op1;
@@ -135,7 +135,6 @@ var saveInfo=function(userinit,userscore){
     var newInfo = {init: userinit, score: userscore};
     // Get previous scores
     var memory = localStorage.getItem("scoreList");
-    console.log(memory);
     if ((memory == null)||(memory==="")){
         //checks if null
         var scoreList = []; //array of object
