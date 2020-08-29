@@ -9,12 +9,15 @@ var userscore = document.querySelector("#score-form");
 
 // Question listing
 var question = [
-    { q: '<var> data does not include', op0: 'boolean', op1: 'alert', op2: 'number', op3: 'string', ans: '1'},
-    { q: '<var> data does not include', op0: 'boolean', op1: 'alert', op2: 'number', op3: 'string', ans: '1'},
-    { q: 'Inside which HTML element do we put JavaScript?', op0: '<js>', op1: '<scipt>', op2: '<scripting>', op3: '<javascipt>', ans: '1'}
+    { q: 'What is the correct syntax for referring to an external script called "xxx.js"?', op0: '<script src=\"xxx.js\">', op1: '<script name=\"xxx.js\">', op2: '<script href=\"xxx.js\">', op3: '<script url=\"xx.js\">', ans: '0'},
+    { q: 'What does <var> data does not include?', op0: 'boolean', op1: 'alert', op2: 'number', op3: 'string', ans: '1'},
+    { q: 'How do you write "Hello World" in an alert box?', op0: 'msg(\"Hello World\");', op1: 'msgBox(\"Hello World\");', op2: 'alert(\"Hello World\");', op3: 'alertBox(\"Hello World\");', ans: '2'},
+    { q: 'What character encloses string values ?', op0: 'commas', op1: 'curly brackets', op2: 'parenthesis', op3: 'quotes', ans: '3'},
+    { q: 'What is the correct format for if statement?', op0: 'if i = 5', op1: 'if i == 5 then', op2: 'if (i === 5)', op3: 'if (i = 5)', ans: '2'},
+    { q: 'Inside which HTML element do we put JavaScript?', op0: '<js>', op1: '<script>', op2: '<scripting>', op3: '<javascript>', ans: '1'}
 ];
 var quesNum=0; //Keeping track of question
-var timeLeft=30;
+var timeLeft=75;
 
 var fadeTimer;
 var fadeOutCorrect = function(){
@@ -63,16 +66,21 @@ var endGame = function () {
 }
 var timerInterval
 
+var select;
 var nextQuestion = function(input){
-    var result = (input === question[quesNum].ans);
+    var result = (input === question[select].ans);
     if (!result){
         timeLeft-=10;
         timer.textContent = Math.max(timeLeft,0);
     }
     displayResult(result);
-    if (quesNum<2){
+    question.splice(select,1);
+    if (quesNum<4){
+        // pick random question
+        select = Math.floor(Math.random()*question.length);
+        updateQuestion(select);
+        // clear selected question
         quesNum++;
-        updateQuestion(quesNum);
     } else {
         clearInterval(timerInterval);
         endGame();
@@ -100,6 +108,11 @@ var readUserInput = function(event){
     }
 }
 
+var firstQuestion = function(){
+    select = Math.floor(Math.random()*question.length);
+    updateQuestion(select);
+}
+
 var startQuiz = function(event){
     // hide the info and button
     info.classList.add("hide");
@@ -110,8 +123,8 @@ var startQuiz = function(event){
     // Start timer
     timer.textContent = timeLeft;
     clockStart();
-    // Start loop
-    updateQuestion(quesNum);
+    // Load
+    firstQuestion();
 }
 
 userInput.addEventListener("click",readUserInput);
